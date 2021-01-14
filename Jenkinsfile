@@ -11,28 +11,23 @@ stages {
 stage('Build') {
             steps {
                script{
-        try{
+                   try{
             
-               if (fileExists('/var/jenkins_home/Build.zip')) {
-                 sh '''cd /
-                cd /var/jenkins_home
-                rm -rf Build.zip'''
-                } else {
-                  echo 'No Build.zip Found'
-                }
-                checkout([$class: 'GitSCM',  poll: true, branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hopesun3/Online_Fruits_And_Veggies_DEVOPS.git']]])
-				fileOperations([fileZipOperation(folderPath: '', outputFolderPath: '/var/jenkins_home/'), fileRenameOperation(destination: '/var/jenkins_home/Build.zip', source: '/var/jenkins_home/CI_CD_Pipeline_main.zip')]) 
+                     if (fileExists('/home/jenkins/jenkins-data/online_project/Build.zip')) {
+                     sh '''cd /
+                     cd /home/jenkins/jenkins-data/online_project
+                     rm -rf Build.zip'''
+                     } else {
+                         echo 'No Build.zip Found'
+                     }
+                checkout([$class: 'GitSCM',  poll: true, branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hopesun3/online_project.git']]])
+	        fileOperations([fileZipOperation(folderPath: '', outputFolderPath: '/var/jenkins_home/'), fileRenameOperation(destination: '/var/jenkins_home/Build.zip', source: '/var/jenkins_home/CI_CD_Pipeline_main.zip')]) 
         }
         catch (Exception e){
         Build_pass = false
     }
-                
-           
         }
-           
-               
-                }
-                
+             }
         }      
         
 stage('deploy_to_Dev'){
