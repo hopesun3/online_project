@@ -10,7 +10,7 @@ pipeline {
 	                 try{
 		                if (fileExists('/var/jenkins_home/onlinepipeline.zip')) {
 			               sh '''cd /var/jenkins_home
-			               rm -rf Build.zip'''
+			               rm -rf onlinepipeline.zip'''
 			              } else {
 			                  echo 'No Build.zip Found'
 			                } 
