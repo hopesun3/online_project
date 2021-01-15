@@ -5,4 +5,4 @@ services:
     ports:
       - "8088:80"
     volumes:
-      - /home/ec2-user/EAPP/onlinepipe:/usr/share/nginx/html/
+      - /home/ec2-user/EAPP/onlinepipeline:/usr/share/nginx/html/
