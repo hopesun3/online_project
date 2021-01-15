@@ -1,11 +1,8 @@
 version: "3.8"
 services:
   web:
-    build: .
+    image: nginx
     ports:
       - "8088:80"
     volumes:
-      - "/home/ec2-user/EAPP/onlinepipe:/usr/share/nginx/html/"
-      - "logvolume01:/var/log"
-volumes:
-  logvolume01: {}
+      - /home/ec2-user/EAPP/onlinepipe:/usr/share/nginx/html/
