@@ -35,6 +35,12 @@ pipeline {
                } 
             }
         }
+
+        stage('UnitTest') {
+            steps {
+                echo 'Hello World'
+            }
+        }
         stage('deploy_to_Test') {
             steps {
                 echo 'Deploy to test'
