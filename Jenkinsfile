@@ -61,9 +61,8 @@ stage('deploy_to_Test'){
 
            if(Build_pass){
 
-          sh '''scp -o StrictHostKeyChecking=no -i "/var/jenkins_home/key4ssh.pem" /var/jenkins_home/onlinepipeline.zip ec2-user@50.16.174.212:/home/ec2-user/EAPP
-	  sh echo "Hello"
-      ssh -i "/var/jenkins_home/key4ssh.pem" ec2-user@50.16.174.212" cd EAPP; sh deployment.sh"
+          sh '''scp -o StrictHostKeyChecking=no -i "/var/jenkins_home/key4ssh.pem" /var/jenkins_home/onlinepipeline.zip ec2-user@34.233.197.59:/home/ec2-user/EAPP
+      ssh -i "/var/jenkins_home/key4ssh.pem" ec2-user@34.233.197.59" cd EAPP; sh deployment.sh"
 '''
 
 }

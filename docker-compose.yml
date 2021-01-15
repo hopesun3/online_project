@@ -5,7 +5,7 @@ services:
     ports:
       - "8088:80"
     volumes:
-      - "/home/ec2-user/EAPP/CI_CD_Pipeline_main:/usr/share/nginx/html/"
+      - "/home/ec2-user/EAPP/onlinepipe:/usr/share/nginx/html/"
       - "logvolume01:/var/log"
 volumes:
   logvolume01: {}
