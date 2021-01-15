@@ -11,23 +11,28 @@ stages {
 stage('Build') {
             steps {
                script{
-                   try{
+        try{
             
-                     if (fileExists('/home/jenkins/jenkins-data/online_project/Build.zip')) {
-                     sh '''cd /
-                     cd /home/jenkins/jenkins-data/online_project
-                     rm -rf Build.zip'''
-                     } else {
-                         echo 'No Build.zip Found'
-                     }
-                checkout([$class: 'GitSCM',  poll: true, branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hopesun3/online_project.git']]])
-	        fileOperations([fileZipOperation(folderPath: '', outputFolderPath: '/var/jenkins_home/'), fileRenameOperation(destination: '/var/jenkins_home/Build.zip', source: '/var/jenkins_home/CI_CD_Pipeline_main.zip')]) 
+               if (fileExists('/home/jenkins/jenkins-data/online_project/Build.zip')) {
+                 sh '''cd /
+                cd /home/jenkins/jenkins-data/online_project
+                rm -rf Build.zip'''
+                } else {
+                  echo 'No Build.zip Found'
+                }
+                checkout([$class: 'GitSCM',  poll: true, branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hopesun3/Online_Fruits_And_Veggies_DEVOPS.git']]])
+				fileOperations([fileZipOperation(folderPath: '', outputFolderPath: '/home/jenkins/jenkins-data/online_project/'), fileRenameOperation(destination: '/home/jenkins/jenkins-data/online_project/Build.zip', source: '/home/jenkins/jenkins-data/online_project/CI_CD_Pipeline_main.zip')]) 
         }
         catch (Exception e){
         Build_pass = false
     }
+                
+           
         }
-             }
+           
+               
+                }
+                
         }      
         
 stage('deploy_to_Dev'){
@@ -38,9 +43,9 @@ stage('deploy_to_Dev'){
 		 
 	   if(Build_pass){
 		 
-	  sh '''scp -o StrictHostKeyChecking=no -i "/var/jenkins_home/ec2key.pem" /var/jenkins_home/Build.zip ec2-user@54.234.254.46:/home/ec2-user/EAPP
+	  sh '''scp -o StrictHostKeyChecking=no -i "/home/jenkins/jenkins-data/online_project/key4ssh.pem" /home/jenkins/jenkins-data/online_project/Build.zip ec2-user@34.233.197.59:/home/ec2-user/EAPP
 
-ssh -i "/var/jenkins_home/ec2key.pem" ec2-user@54.234.254.46 "cd EAPP; sh deployment.sh"
+      ssh -i "/home/jenkins/jenkins-data/online_project/key4ssh.pem" ec2-user@34.233.197.59 "cd EAPP; sh deployment.sh"
 '''
 
 }
@@ -64,34 +69,10 @@ stage('UnitTest'){
 		UnitTest_pass=false
      }
      
-}
+     }
 	 
-    }
+          }
+        }
 }
-
-
-
-}
-
-stage('deploy_to_Test'){
-	
-	 steps {
-		 script
-		 {
-		 
-	   if(Build_pass){
-		 
-	  sh '''scp -o StrictHostKeyChecking=no -i "/var/jenkins_home/ec2key.pem" /var/jenkins_home/Build.zip ec2-user@54.234.254.46:/home/ec2-user/EAPP
-
-ssh -i "/var/jenkins_home/ec2key.pem" ec2-user@54.234.254.46 "cd EAPP; sh deployment.sh"
-'''
-
-}
-}
-}
-}
-
-
-
 }
 }
