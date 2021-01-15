@@ -20,8 +20,9 @@ stage('Build') {
                 } else {
                   echo 'No Build.zip Found'
                 }
-                checkout([$class: 'GitSCM',  poll: true, branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hopesun3/online_project.git']]])
-		fileOperations([fileZipOperation(folderPath: '', outputFolderPath: '/var/jenkins_home/'), fileRenameOperation(destination: '/var/jenkins_home/Build.zip', source: '/var/jenkins_home/CI_CD_Pipeline_main.zip')]) 
+checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hopesun3/online_project.git']]])
+		fileOperations([fileZipOperation(folderPath: '', outputFolderPath: '/var/jenkins_home/'), fileRenameOperation(destination: '/var/jenkins_home/Build.zip', source: '/var/jenkins_home/workspace/onlinepipeline.zip')]) 
+
         }
         catch (Exception e){
         Build_pass = false
